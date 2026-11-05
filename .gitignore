@@ -17,3 +17,9 @@ supabase/.branches/
 
 # macOS
 .DS_Store
+
+# Générés par xcodegen depuis project.yml
+App/Info.plist
+App/RepForge.entitlements
+Widgets/Info.plist
+Widgets/RepForgeWidgets.entitlements
