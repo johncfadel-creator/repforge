@@ -115,7 +115,14 @@ def main():
     lines.append("on conflict (id) do update set")
     lines.append("  sort_order = excluded.sort_order, title = excluded.title, subtitle = excluded.subtitle,")
     lines.append("  symbol = excluded.symbol, exercises = excluded.exercises, updated_at = now();")
-    (ROOT / "supabase/seed.sql").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    seed = "\n".join(lines) + "\n"
+    (ROOT / "supabase/seed.sql").write_text(seed, encoding="utf-8")
+    init = (ROOT / "supabase/migrations/20261105000000_init.sql").read_text(encoding="utf-8")
+    (ROOT / "supabase/setup_all.sql").write_text(
+        "-- RepForge : installation complète en un seul copier-coller (SQL Editor Supabase).\n"
+        "-- = migrations/20261105000000_init.sql + seed.sql\n\n" + init + "\n" + seed,
+        encoding="utf-8",
+    )
     print(f"✅ {len(templates)} séances générées")
 
 
