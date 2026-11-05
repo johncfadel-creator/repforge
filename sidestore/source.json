@@ -1,0 +1,33 @@
+{
+  "name": "RepForge",
+  "identifier": "com.charbelfadel.repforge.source",
+  "subtitle": "Carnet de musculation personnel",
+  "sourceURL": "",
+  "iconURL": "",
+  "website": "",
+  "tintColor": "#B0FF3D",
+  "apps": [
+    {
+      "name": "RepForge",
+      "bundleIdentifier": "com.charbelfadel.repforge",
+      "developerName": "Charbel Fadel",
+      "subtitle": "Suivi de musculation offline-first",
+      "localizedDescription": "Séries, chrono de repos dans la Dynamic Island, pause séance, analyse de progression, synchronisation Supabase et Apple Santé.",
+      "iconURL": "",
+      "tintColor": "#B0FF3D",
+      "category": "utilities",
+      "appPermissions": {
+        "entitlements": [
+          "com.apple.developer.healthkit",
+          "com.apple.security.application-groups"
+        ],
+        "privacy": {
+          "NSHealthShareUsageDescription": "Lecture du poids, de la taille et de la date de naissance.",
+          "NSHealthUpdateUsageDescription": "Enregistrement des séances et des mesures."
+        }
+      },
+      "versions": []
+    }
+  ],
+  "news": []
+}

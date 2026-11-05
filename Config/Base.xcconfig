@@ -1,0 +1,7 @@
+// Réglages communs. Les secrets vivent dans Secrets.xcconfig (ignoré par git).
+MARKETING_VERSION = 1.0.0
+CURRENT_PROJECT_VERSION = 1
+DEVELOPMENT_TEAM =
+CODE_SIGN_STYLE = Automatic
+
+#include? "Secrets.xcconfig"

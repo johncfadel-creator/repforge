@@ -1,0 +1,120 @@
+# Projet Xcode généré par XcodeGen (https://github.com/yonaskolb/XcodeGen)
+#   brew install xcodegen && xcodegen generate
+# Le .xcodeproj n'est pas versionné : project.yml est la source de vérité.
+name: RepForge
+options:
+  bundleIdPrefix: com.charbelfadel
+  deploymentTarget:
+    iOS: "18.0"
+  createIntermediateGroups: true
+  developmentLanguage: fr
+  xcodeVersion: "26.0"
+
+configFiles:
+  Debug: Config/Base.xcconfig
+  Release: Config/Base.xcconfig
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    TARGETED_DEVICE_FAMILY: "1"
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    DEAD_CODE_STRIPPING: YES
+    LOCALIZATION_PREFERS_STRING_CATALOGS: YES
+
+packages:
+  Supabase:
+    url: https://github.com/supabase/supabase-swift
+    from: "2.20.0"
+
+targets:
+  RepForge:
+    type: application
+    platform: iOS
+    sources:
+      - path: App
+      - path: Shared
+    dependencies:
+      - target: RepForgeWidgets
+        embed: true
+      - package: Supabase
+        product: Supabase
+    entitlements:
+      path: App/RepForge.entitlements
+      properties:
+        com.apple.developer.healthkit: true
+        com.apple.developer.healthkit.access: []
+        com.apple.security.application-groups:
+          - group.com.charbelfadel.repforge
+        com.apple.developer.applesignin:
+          - Default
+        com.apple.developer.usernotifications.time-sensitive: true
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: RepForge
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSRequiresIPhoneOS: true
+        ITSAppUsesNonExemptEncryption: false
+        UILaunchScreen:
+          UIColorName: LaunchBackground
+        UIUserInterfaceStyle: Dark
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UIApplicationSupportsIndirectInputEvents: true
+        UIBackgroundModes: [audio]
+        NSSupportsLiveActivities: true
+        NSSupportsLiveActivitiesFrequentUpdates: true
+        NSHealthShareUsageDescription: "RepForge lit ton poids, ta taille et ta date de naissance pour calculer tes performances (délestage, volume)."
+        NSHealthUpdateUsageDescription: "RepForge enregistre tes séances de musculation et tes mesures de poids et de taille dans Santé."
+        CFBundleURLTypes:
+          - CFBundleURLName: com.charbelfadel.repforge.auth
+            CFBundleURLSchemes: [repforge]
+        SUPABASE_HOST: $(SUPABASE_HOST)
+        SUPABASE_ANON_KEY: $(SUPABASE_ANON_KEY)
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.charbelfadel.repforge
+        PRODUCT_NAME: RepForge
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        SWIFT_ACTIVE_COMPILATION_CONDITIONS: $(inherited) MAIN_APP
+        INFOPLIST_KEY_CFBundleDisplayName: RepForge
+
+  RepForgeWidgets:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Widgets
+      - path: Shared
+    entitlements:
+      path: Widgets/RepForgeWidgets.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.charbelfadel.repforge
+    info:
+      path: Widgets/Info.plist
+      properties:
+        CFBundleDisplayName: RepForge Widgets
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+        NSSupportsLiveActivities: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.charbelfadel.repforge.widgets
+        PRODUCT_NAME: RepForgeWidgets
+        SKIP_INSTALL: YES
+
+schemes:
+  RepForge:
+    build:
+      targets:
+        RepForge: all
+        RepForgeWidgets: all
+    run:
+      config: Debug
+    archive:
+      config: Release

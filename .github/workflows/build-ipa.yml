@@ -1,0 +1,47 @@
+# Build cloud : chaque push sur main compile l'app sur un Mac GitHub, publie l'IPA non signé
+# en Release et met à jour la source SideStore -> mise à jour sur l'iPhone sans Mac.
+name: Build IPA (SideStore)
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["sidestore/source.json", "**.md", "supabase/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-ipa
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Xcode le plus récent
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Secrets Supabase
+        env:
+          SUPABASE_HOST: ${{ secrets.SUPABASE_HOST }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          printf 'SUPABASE_HOST = %s\nSUPABASE_ANON_KEY = %s\nDEVELOPMENT_TEAM =\n' \
+            "$SUPABASE_HOST" "$SUPABASE_ANON_KEY" > Config/Secrets.xcconfig
+
+      - name: Build + release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPO: ${{ github.repository }}
+          DEPLOY_MODE: sidestore
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          ./scripts/deploy.sh

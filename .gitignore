@@ -1,0 +1,19 @@
+# Xcode
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+DerivedData/
+build/
+*.ipa
+*.xcarchive
+.swiftpm/
+Package.resolved
+
+# Secrets
+Config/Secrets.xcconfig
+.env
+supabase/.temp/
+supabase/.branches/
+
+# macOS
+.DS_Store
