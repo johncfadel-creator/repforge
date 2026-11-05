@@ -29,6 +29,15 @@
       "versions": [
         {
           "version": "1.0.0",
+          "buildVersion": "8",
+          "date": "2026-11-05T15:02:06Z",
+          "localizedDescription": "chore: active la connexion Google dans la config Supabase",
+          "downloadURL": "https://github.com/johncfadel-creator/repforge/releases/download/v1.0.0-8/RepForge.ipa",
+          "size": 1792611,
+          "minOSVersion": "18.0"
+        },
+        {
+          "version": "1.0.0",
           "buildVersion": "5",
           "date": "2026-11-05T13:09:43Z",
           "localizedDescription": "fix: deploy.sh — accolades autour de $TAG et $DEVICE devant « … »",
