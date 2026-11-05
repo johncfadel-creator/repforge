@@ -90,7 +90,7 @@ if [[ "$MODE" == "devicectl" ]]; then
     build
   APP_PATH="$DERIVED/Build/Products/Release-iphoneos/$APP_NAME.app"
   [[ -d "$APP_PATH" ]] || die "Build introuvable : $APP_PATH"
-  log "Installation sur $DEVICE…"
+  log "Installation sur ${DEVICE}…"
   xcrun devicectl device install app --device "$DEVICE" "$APP_PATH"
   xcrun devicectl device process launch --device "$DEVICE" "$BUNDLE_ID" || true
   log "✅ Installé et lancé sur l'iPhone."
@@ -133,7 +133,7 @@ fi
 
 # --- 6. Publication GitHub Release + push de la source ------------------------
 if [[ -z "${SKIP_RELEASE:-}" ]] && command -v gh >/dev/null && [[ -n "$REPO" ]]; then
-  log "Publication de la release $TAG…"
+  log "Publication de la release ${TAG}…"
   gh release create "$TAG" "$IPA" --repo "$REPO" --title "RepForge $MARKETING ($BUILD_NUMBER)" \
     --notes "$(git log -1 --pretty=%s)" --latest || warn "Release déjà existante ?"
   git add sidestore/source.json
