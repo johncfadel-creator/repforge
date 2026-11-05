@@ -47,9 +47,11 @@ targets:
         com.apple.developer.healthkit.access: []
         com.apple.security.application-groups:
           - group.com.charbelfadel.repforge
-        com.apple.developer.applesignin:
-          - Default
-        com.apple.developer.usernotifications.time-sensitive: true
+        # Compte Apple gratuit : Sign in with Apple et Time-Sensitive sont refusés à la signature.
+        # Avec un compte payant, rajouter ici :
+        #   com.apple.developer.applesignin: [Default]
+        #   com.apple.developer.usernotifications.time-sensitive: true
+        # et SIGN_IN_WITH_APPLE dans SWIFT_ACTIVE_COMPILATION_CONDITIONS ci-dessous.
     info:
       path: App/Info.plist
       properties:

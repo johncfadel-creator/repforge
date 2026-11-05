@@ -22,6 +22,8 @@ struct SignInView: View {
             Spacer()
 
             VStack(spacing: 12) {
+                // Sign in with Apple exige un compte développeur payant (voir project.yml).
+                #if SIGN_IN_WITH_APPLE
                 SignInWithAppleButton(.signIn) { request in
                     auth.prepareAppleRequest(request)
                 } onCompletion: { result in
@@ -30,6 +32,7 @@ struct SignInView: View {
                 .signInWithAppleButtonStyle(.white)
                 .frame(height: 52)
                 .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                #endif
 
                 Button {
                     Task {
