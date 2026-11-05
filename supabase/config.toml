@@ -338,6 +338,17 @@ skip_nonce_check = false
 # If enabled, it will allow the user to successfully authenticate when the provider does not return an email address.
 email_optional = false
 
+# Connexion Google (client OAuth « Web » du projet Google Cloud repforge-513814).
+[auth.external.google]
+enabled = true
+client_id = "735959068919-br7o4ml56j1takgga8d7gjro7nbgdi25.apps.googleusercontent.com"
+# Ne jamais versionner le secret : il est lu depuis l'environnement au moment du `supabase config push`.
+secret = "env(SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET)"
+redirect_uri = ""
+url = ""
+skip_nonce_check = false
+email_optional = false
+
 # Allow Solana wallet holders to sign in to your project via the Sign in with Solana (SIWS) standard.
 # You can configure "web3" rate limit in the [auth.rate_limit] section and set up [auth.captcha] if self-hosting.
 [auth.web3.solana]
