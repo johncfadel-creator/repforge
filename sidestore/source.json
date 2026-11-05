@@ -2,9 +2,9 @@
   "name": "RepForge",
   "identifier": "com.charbelfadel.repforge.source",
   "subtitle": "Carnet de musculation personnel",
-  "sourceURL": "",
-  "iconURL": "",
-  "website": "",
+  "sourceURL": "https://raw.githubusercontent.com/johncfadel-creator/repforge/main/sidestore/source.json",
+  "iconURL": "https://raw.githubusercontent.com/johncfadel-creator/repforge/main/App/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png",
+  "website": "https://github.com/johncfadel-creator/repforge",
   "tintColor": "#B0FF3D",
   "apps": [
     {
@@ -13,7 +13,7 @@
       "developerName": "Charbel Fadel",
       "subtitle": "Suivi de musculation offline-first",
       "localizedDescription": "Séries, chrono de repos dans la Dynamic Island, pause séance, analyse de progression, synchronisation Supabase et Apple Santé.",
-      "iconURL": "",
+      "iconURL": "https://raw.githubusercontent.com/johncfadel-creator/repforge/main/App/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png",
       "tintColor": "#B0FF3D",
       "category": "utilities",
       "appPermissions": {
@@ -26,7 +26,17 @@
           "NSHealthUpdateUsageDescription": "Enregistrement des séances et des mesures."
         }
       },
-      "versions": []
+      "versions": [
+        {
+          "version": "1.0.0",
+          "buildVersion": "5",
+          "date": "2026-11-05T13:09:43Z",
+          "localizedDescription": "fix: deploy.sh — accolades autour de $TAG et $DEVICE devant « … »",
+          "downloadURL": "https://github.com/johncfadel-creator/repforge/releases/download/v1.0.0-5/RepForge.ipa",
+          "size": 1814090,
+          "minOSVersion": "18.0"
+        }
+      ]
     }
   ],
   "news": []
