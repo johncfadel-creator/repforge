@@ -12,8 +12,11 @@ final class LiveActivityManager {
 
     func start(title: String, subtitle: String, state: RestTimerAttributes.ContentState) {
         // Nettoie d'éventuelles activités orphelines (app tuée pendant une séance).
-        for orphan in Activity<RestTimerAttributes>.activities where orphan.id != activity?.id {
-            Task { await orphan.end(nil, dismissalPolicy: .immediate) }
+        let currentID = activity?.id
+        Task.detached {
+            for orphan in Activity<RestTimerAttributes>.activities where orphan.id != currentID {
+                await orphan.end(nil, dismissalPolicy: .immediate)
+            }
         }
         guard activity == nil, areActivitiesEnabled else { return update(state) }
         do {
@@ -35,8 +38,9 @@ final class LiveActivityManager {
     func update(_ state: RestTimerAttributes.ContentState) {
         guard let activity else { return }
         let stale = state.phase == .resting ? state.restEndDate.addingTimeInterval(1) : nil
-        Task {
-            await activity.update(ActivityContent(state: state, staleDate: stale, relevanceScore: 100))
+        let id = activity.id
+        Task.detached {
+            await Self.activity(id: id)?.update(ActivityContent(state: state, staleDate: stale, relevanceScore: 100))
         }
     }
 
@@ -49,18 +53,26 @@ final class LiveActivityManager {
             body: "\(state.nextSetLabel)",
             sound: .default
         )
-        Task {
-            await activity.update(ActivityContent(state: state, staleDate: nil, relevanceScore: 100),
-                                  alertConfiguration: alert)
+        let id = activity.id
+        Task.detached {
+            await Self.activity(id: id)?.update(ActivityContent(state: state, staleDate: nil, relevanceScore: 100),
+                                                alertConfiguration: alert)
         }
     }
 
     func end(final state: RestTimerAttributes.ContentState?) {
         guard let activity else { return }
         self.activity = nil
-        Task {
-            await activity.end(state.map { ActivityContent(state: $0, staleDate: nil) },
-                               dismissalPolicy: .after(.now.addingTimeInterval(5 * 60)))
+        let id = activity.id
+        Task.detached {
+            await Self.activity(id: id)?.end(state.map { ActivityContent(state: $0, staleDate: nil) },
+                                             dismissalPolicy: .after(.now.addingTimeInterval(5 * 60)))
         }
+    }
+
+    /// `Activity` n'est pas `Sendable` : on la retrouve par son id hors du main actor
+    /// au lieu de la faire traverser la frontière d'isolation.
+    private nonisolated static func activity(id: String) -> Activity<RestTimerAttributes>? {
+        Activity<RestTimerAttributes>.activities.first { $0.id == id }
     }
 }
